@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@theme {
+  /* surfaces */
+  --color-bg: #fdfaf4;
+  --color-bg-dark: #0a1815;
+  --color-surface: #ffffff;
+  --color-surface-dark: #12241f;
+  --color-surface-muted: #e8f5ef;
+  --color-surface-muted-dark: #14302a;
+
+  /* text */
+  --color-ink: #142420;
+  --color-ink-dark: #eef7f2;
+  --color-ink-soft: #57685f;
+  --color-ink-soft-dark: #a9bcb4;
+
+  /* lines */
+  --color-border: #e0e9e2;
+  --color-border-dark: #204039;
+
+  /* brand: emerald-teal (primary) */
+  --color-primary-50: #ecfaf5;
+  --color-primary-100: #cdf0e2;
+  --color-primary-300: #67cbb0;
+  --color-primary-400: #2ba98c;
+  --color-primary-500: #0c8871;
+  --color-primary-600: #096b5a;
+  --color-primary-700: #085346;
+  --color-primary-800: #073d34;
+
+  /* brand: living coral (single warm accent) */
+  --color-accent-100: #ffe3d6;
+  --color-accent-300: #ffb196;
+  --color-accent-400: #fc7d54;
+  --color-accent-500: #ef5027;
+  --color-accent-600: #cf3a17;
+  --color-accent-700: #a52c10;
+
+  --font-display: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --shadow-soft: 0 1px 2px rgba(20, 37, 30, 0.04), 0 12px 32px -12px rgba(20, 37, 30, 0.14);
+  --shadow-lifted: 0 2px 4px rgba(20, 37, 30, 0.05), 0 24px 48px -16px rgba(20, 37, 30, 0.22);
+}
+
+@layer base {
+  * {
+    @apply border-border dark:border-border-dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg text-ink dark:bg-bg-dark dark:text-ink-dark font-body antialiased;
+    font-feature-settings: "ss01" 1, "cv05" 1;
+  }
+
+  ::selection {
+    background: var(--color-accent-300);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display font-extrabold tracking-tight;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-10;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
