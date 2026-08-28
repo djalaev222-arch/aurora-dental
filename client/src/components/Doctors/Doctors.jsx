@@ -32,7 +32,7 @@ export function Doctors() {
             type="button"
             onClick={() => scrollByCard(-1)}
             aria-label="Предыдущие врачи"
-            className="flex h-11 w-11 items-center justify-center border border-line-strong text-ink transition-colors hover:bg-surface"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-line-strong text-ink transition-colors hover:bg-surface"
           >
             <Icon name="ArrowRight" weight="bold" className="h-4 w-4 rotate-180" />
           </button>
@@ -40,7 +40,7 @@ export function Doctors() {
             type="button"
             onClick={() => scrollByCard(1)}
             aria-label="Следующие врачи"
-            className="flex h-11 w-11 items-center justify-center border border-line-strong text-ink transition-colors hover:bg-surface"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-line-strong text-ink transition-colors hover:bg-surface"
           >
             <Icon name="ArrowRight" weight="bold" className="h-4 w-4" />
           </button>

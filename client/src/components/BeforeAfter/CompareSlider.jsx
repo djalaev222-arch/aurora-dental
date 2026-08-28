@@ -12,7 +12,7 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, className })
 
   return (
     <div
-      className={`relative aspect-[5/4] w-full select-none overflow-hidden bg-bg-alt ${className ?? ''}`}
+      className={`relative aspect-[4/3] w-full select-none overflow-hidden bg-bg-alt ${className ?? ''}`}
     >
       <img
         src={before}

@@ -75,7 +75,7 @@ export function Header({ onBookClick }) {
           aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center border border-line-strong text-ink lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-line-strong text-ink lg:hidden"
         >
           <Icon name={menuOpen ? 'X' : 'List'} className="h-5 w-5" weight="regular" />
         </button>

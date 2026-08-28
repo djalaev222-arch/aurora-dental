@@ -11,7 +11,7 @@ export function FloatingCTA({ onBookClick }) {
       <a
         href={clinic.phoneHref}
         aria-label="Позвонить в клинику"
-        className="flex h-11 w-11 flex-none items-center justify-center border border-line-strong text-accent"
+        className="flex h-11 w-11 flex-none items-center justify-center rounded-full border border-line-strong text-accent"
       >
         <Icon name="Phone" weight="fill" className="h-4 w-4" />
       </a>
@@ -20,7 +20,7 @@ export function FloatingCTA({ onBookClick }) {
         target="_blank"
         rel="noreferrer"
         aria-label="Написать в WhatsApp"
-        className="flex h-11 w-11 flex-none items-center justify-center border border-line-strong text-accent"
+        className="flex h-11 w-11 flex-none items-center justify-center rounded-full border border-line-strong text-accent"
       >
         <Icon name="WhatsappLogo" weight="fill" className="h-4 w-4" />
       </a>

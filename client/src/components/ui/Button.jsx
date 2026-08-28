@@ -23,7 +23,9 @@ export const Button = forwardRef(function Button(
     <Tag
       ref={ref}
       className={clsx(
-        'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[2px] font-semibold tracking-[0.01em]',
+        // shape rule: interactive controls are full-pill; cards, inputs and
+        // images stay near-sharp (2px).
+        'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold tracking-[0.01em]',
         'transition-[background-color,border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
         'active:translate-y-px',
         'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
