@@ -5,36 +5,29 @@ const YEAR = new Date().getFullYear()
 
 export function Footer() {
   return (
-    <footer className="bg-ink dark:bg-bg-dark text-white/80">
-      <div className="container-page grid grid-cols-1 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:py-16">
+    <footer className="bg-deep text-deep-ink-soft">
+      <div className="container-page grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10 lg:py-20">
         <div>
-          <a href="#top" className="flex items-center gap-2.5 font-display text-lg font-extrabold text-white">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-500">
-              <svg viewBox="0 0 32 32" className="h-5 w-5" fill="none" aria-hidden="true">
-                <path
-                  d="M16 8c-2.6 0-4.6 1.1-6 2.6-.6.7-.4 1.9.5 2.2.5.2 1 .1 1.4-.3.9-.9 2.2-1.5 3.5-1.6.2 3.3.6 6.8 1.4 9.6.2.7 1.2.7 1.4 0 .5-1.8.9-4 1.1-6.2.2 2.2.6 4.4 1.1 6.2.2.7 1.2.7 1.4 0 .8-2.8 1.2-6.3 1.4-9.6 1.3.1 2.6.7 3.5 1.6.4.4.9.5 1.4.3.9-.3 1.1-1.5.5-2.2-1.4-1.5-3.4-2.6-6-2.6h-6.6z"
-                  fill="white"
-                />
-              </svg>
-            </span>
-            {clinic.name}
-          </a>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
-            Лицензия № ЛО-77-01-023456 от 12 марта 2015 года. Стоматологическая помощь
-            взрослым и детям в Москве.
+          <p className="flex items-baseline gap-2">
+            <span className="font-display text-[1.7rem] leading-none text-deep-ink">{clinic.wordmark}</span>
+            <span className="eyebrow text-deep-ink-soft">дентал</span>
           </p>
-          <div className="mt-5 flex gap-3">
+          <p className="mt-5 max-w-xs text-[0.85rem] leading-relaxed text-deep-ink-soft">
+            Лицензия № ЛО-77-01-023456 от 12 марта 2015 года. Стоматологическая помощь взрослым
+            и детям в центре Москвы.
+          </p>
+          <div className="mt-6 flex gap-3">
             <a
               href="#"
               aria-label="Instagram клиники"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition-colors hover:border-white/40 hover:bg-white/10"
+              className="flex h-10 w-10 items-center justify-center border border-deep-line text-deep-ink-soft transition-colors hover:border-deep-ink hover:text-deep-ink"
             >
               <Icon name="InstagramLogo" weight="regular" className="h-4 w-4" />
             </a>
             <a
               href="#"
               aria-label="YouTube клиники"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition-colors hover:border-white/40 hover:bg-white/10"
+              className="flex h-10 w-10 items-center justify-center border border-deep-line text-deep-ink-soft transition-colors hover:border-deep-ink hover:text-deep-ink"
             >
               <Icon name="YoutubeLogo" weight="regular" className="h-4 w-4" />
             </a>
@@ -42,11 +35,11 @@ export function Footer() {
         </div>
 
         <nav aria-label="Навигация по разделам">
-          <p className="text-xs font-semibold uppercase tracking-wide text-white/40">Разделы</p>
-          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+          <p className="text-[0.8rem] font-semibold text-deep-ink">Разделы</p>
+          <ul className="mt-4 flex flex-col gap-2.5 text-[0.9rem]">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className="transition-colors hover:text-white">
+                <a href={link.href} className="transition-colors hover:text-deep-ink">
                   {link.label}
                 </a>
               </li>
@@ -55,16 +48,16 @@ export function Footer() {
         </nav>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-white/40">Контакты</p>
-          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+          <p className="text-[0.8rem] font-semibold text-deep-ink">Контакты</p>
+          <ul className="mt-4 flex flex-col gap-2.5 text-[0.9rem]">
             <li>{clinic.address}</li>
             <li>
-              <a href={clinic.phoneHref} className="hover:text-white">
+              <a href={clinic.phoneHref} className="hover:text-deep-ink">
                 {clinic.phone}
               </a>
             </li>
             <li>
-              <a href={`mailto:${clinic.email}`} className="hover:text-white">
+              <a href={`mailto:${clinic.email}`} className="hover:text-deep-ink">
                 {clinic.email}
               </a>
             </li>
@@ -72,17 +65,19 @@ export function Footer() {
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-white/40">Часы работы</p>
-          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+          <p className="text-[0.8rem] font-semibold text-deep-ink">Часы работы</p>
+          <ul className="mt-4 flex flex-col gap-2.5 text-[0.9rem]">
             <li>Пн-Пт: {clinic.hoursWeekday}</li>
             <li>Сб-Вс: {clinic.hoursWeekend}</li>
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-6">
-        <div className="container-page flex flex-col gap-2 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {YEAR} {clinic.name}. Все права защищены.</p>
+      <div className="border-t border-deep-line py-6">
+        <div className="container-page flex flex-col gap-2 text-[0.78rem] text-deep-ink-soft sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {YEAR} {clinic.name}. Все права защищены.
+          </p>
           <p>Имеются противопоказания. Необходима консультация специалиста.</p>
         </div>
       </div>

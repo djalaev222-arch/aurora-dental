@@ -4,14 +4,16 @@ import { stats } from '../../data/content.js'
 
 export function Stats() {
   return (
-    <section className="border-y border-border dark:border-border-dark bg-surface dark:bg-surface-dark">
-      <div className="container-page grid grid-cols-2 gap-8 py-10 sm:py-12 lg:grid-cols-4">
+    <section className="border-y border-line bg-surface">
+      <div className="container-wide grid grid-cols-2 gap-x-6 gap-y-12 py-14 sm:gap-x-10 lg:grid-cols-4 lg:py-16">
         {stats.map((stat, i) => (
-          <Reveal key={stat.label} delay={i * 0.08}>
-            <p className="text-3xl font-extrabold text-primary-700 dark:text-primary-300 sm:text-4xl">
+          <Reveal key={stat.label} delay={i * 0.08} className="lg:border-l lg:border-line lg:pl-8 lg:first:border-l-0 lg:first:pl-0">
+            <p className="font-display text-[2.5rem] leading-none text-ink lg:text-[3rem]">
               <Counter value={stat.value} suffix={stat.suffix} />
             </p>
-            <p className="mt-1 text-sm text-ink-soft dark:text-ink-soft-dark">{stat.label}</p>
+            <p className="mt-3 max-w-[13rem] text-[0.86rem] leading-snug text-ink-soft">
+              {stat.label}
+            </p>
           </Reveal>
         ))}
       </div>

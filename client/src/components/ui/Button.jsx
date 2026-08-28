@@ -3,15 +3,16 @@ import clsx from 'clsx'
 
 const VARIANTS = {
   primary:
-    'bg-[linear-gradient(135deg,var(--color-accent-400),var(--color-accent-500)_55%,var(--color-accent-600))] text-white shadow-soft hover:shadow-lifted hover:brightness-[1.06] focus-visible:outline-accent-600',
+    'bg-accent text-surface hover:bg-accent-strong shadow-[0_1px_2px_rgba(30,42,41,0.12)] hover:shadow-[0_10px_24px_-10px_rgba(157,65,39,0.55)]',
   secondary:
-    'bg-transparent text-primary-700 dark:text-primary-300 border border-primary-500/40 hover:bg-primary-50 dark:hover:bg-primary-800/30',
-  ghost: 'bg-white/10 text-white border border-white/30 hover:bg-white/20 backdrop-blur-sm',
+    'border border-ink/25 text-ink hover:border-ink hover:bg-ink/[0.04]',
+  ghost:
+    'border border-deep-ink/30 text-deep-ink hover:bg-deep-ink/10',
 }
 
 const SIZES = {
-  md: 'px-5 py-3 text-sm',
-  lg: 'px-7 py-4 text-base',
+  md: 'px-5 py-2.5 text-sm',
+  lg: 'px-7 py-3.5 text-[0.95rem]',
 }
 
 export const Button = forwardRef(function Button(
@@ -22,9 +23,10 @@ export const Button = forwardRef(function Button(
     <Tag
       ref={ref}
       className={clsx(
-        'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-all duration-200 ease-out',
-        'active:scale-[0.97] active:translate-y-px',
-        'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+        'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[2px] font-semibold tracking-[0.01em]',
+        'transition-[background-color,border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+        'active:translate-y-px',
+        'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
         VARIANTS[variant],
         SIZES[size],
         className,

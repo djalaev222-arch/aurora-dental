@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { SectionHeading } from '../ui/SectionHeading.jsx'
-import { Reveal } from '../ui/Reveal.jsx'
 import { Icon } from '../ui/Icon.jsx'
 import { testimonials } from '../../data/content.js'
 
-const AUTOPLAY_MS = 6500
+const AUTOPLAY_MS = 7000
 
 export function Testimonials() {
   const [[index, direction], setState] = useState([0, 0])
@@ -32,20 +30,16 @@ export function Testimonials() {
   const current = testimonials[index]
 
   return (
-    <section id="reviews" className="bg-surface-muted dark:bg-surface-muted-dark py-20 sm:py-28">
+    <section id="reviews" className="bg-bg-alt py-24 sm:py-32">
       <div className="container-page">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading
-            eyebrow="Отзывы"
-            title="Что говорят наши пациенты"
-            description="Реальные истории людей, которые перестали бояться стоматолога."
-          />
+        <div className="flex items-end justify-between gap-6">
+          <p className="eyebrow">Отзывы пациентов</p>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => go(-1)}
               aria-label="Предыдущий отзыв"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-border dark:border-border-dark text-ink dark:text-ink-dark transition-colors hover:bg-surface dark:hover:bg-surface-dark"
+              className="flex h-11 w-11 items-center justify-center border border-line-strong text-ink transition-colors hover:bg-surface"
             >
               <Icon name="ArrowRight" weight="bold" className="h-4 w-4 rotate-180" />
             </button>
@@ -53,54 +47,48 @@ export function Testimonials() {
               type="button"
               onClick={() => go(1)}
               aria-label="Следующий отзыв"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-border dark:border-border-dark text-ink dark:text-ink-dark transition-colors hover:bg-surface dark:hover:bg-surface-dark"
+              className="flex h-11 w-11 items-center justify-center border border-line-strong text-ink transition-colors hover:bg-surface"
             >
               <Icon name="ArrowRight" weight="bold" className="h-4 w-4" />
             </button>
           </div>
         </div>
 
-        <Reveal delay={0.1} className="relative mt-10 overflow-hidden">
+        <div className="relative mt-10 min-h-[20rem] border-t border-line-strong pt-10">
           <AnimatePresence mode="wait" custom={direction} initial={false}>
-            <motion.article
+            <motion.figure
               key={current.id}
               custom={direction}
-              initial={reduce ? false : { opacity: 0, x: direction >= 0 ? 48 : -48 }}
+              initial={reduce ? false : { opacity: 0, x: direction >= 0 ? 40 : -40 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={reduce ? undefined : { opacity: 0, x: direction >= 0 ? -48 : 48 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="mx-auto flex max-w-2xl flex-col items-center gap-5 rounded-3xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-6 py-10 text-center shadow-soft sm:px-12"
+              exit={reduce ? undefined : { opacity: 0, x: direction >= 0 ? -40 : 40 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-[52rem]"
             >
-              <Icon name="Quotes" weight="fill" className="h-8 w-8 text-primary-300 dark:text-primary-600" />
-              <p className="text-lg leading-relaxed text-ink dark:text-ink-dark sm:text-xl">
+              <blockquote className="font-display text-[1.6rem] leading-[1.32] text-ink sm:text-[2.05rem] sm:leading-[1.3]">
+                <span className="text-accent">“</span>
                 {current.quote}
-              </p>
-              <div className="flex items-center gap-1 text-accent-500">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Icon
-                    key={i}
-                    name="Star"
-                    weight={i < Math.round(current.rating) ? 'fill' : 'regular'}
-                    className="h-4 w-4"
-                  />
-                ))}
-              </div>
-              <div className="flex items-center gap-3">
+                <span className="text-accent">”</span>
+              </blockquote>
+              <figcaption className="mt-8 flex items-center gap-4">
                 <img
                   src={current.photo}
                   alt=""
-                  width={44}
-                  height={44}
+                  width={52}
+                  height={52}
                   loading="lazy"
-                  className="h-11 w-11 rounded-full object-cover"
+                  className="h-12 w-12 rounded-full object-cover"
                 />
-                <p className="text-sm font-semibold text-ink dark:text-ink-dark">{current.name}</p>
-              </div>
-            </motion.article>
+                <div>
+                  <p className="text-[0.95rem] font-semibold text-ink">{current.name}</p>
+                  <p className="text-[0.83rem] text-ink-soft">{current.context}</p>
+                </div>
+              </figcaption>
+            </motion.figure>
           </AnimatePresence>
-        </Reveal>
+        </div>
 
-        <div className="mt-6 flex justify-center gap-2">
+        <div className="mt-10 flex gap-2">
           {testimonials.map((t, i) => (
             <button
               key={t.id}
@@ -108,8 +96,8 @@ export function Testimonials() {
               onClick={() => goTo(i)}
               aria-label={`Показать отзыв ${i + 1}`}
               aria-current={i === index}
-              className={`h-2 rounded-full transition-all ${
-                i === index ? 'w-6 bg-primary-500' : 'w-2 bg-border dark:bg-border-dark'
+              className={`h-px transition-all duration-500 ${
+                i === index ? 'w-12 bg-accent' : 'w-6 bg-line-strong'
               }`}
             />
           ))}

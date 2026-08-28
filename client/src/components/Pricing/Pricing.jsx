@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import clsx from 'clsx'
 import { SectionHeading } from '../ui/SectionHeading.jsx'
-import { Reveal } from '../ui/Reveal.jsx'
 import { Button } from '../ui/Button.jsx'
 import { pricing } from '../../data/content.js'
 import { formatPrice } from '../../lib/format.js'
@@ -12,20 +11,24 @@ export function Pricing({ onBookClick }) {
   const category = pricing[active]
 
   return (
-    <section id="pricing" className="bg-surface-muted dark:bg-surface-muted-dark py-20 sm:py-28">
-      <div className="container-page">
-        <SectionHeading
-          eyebrow="Цены"
-          title="Прозрачное ценообразование без скрытых доплат"
-          description="Итоговую стоимость подтверждаем на диагностике и фиксируем в договоре до начала лечения."
-        />
+    <section id="pricing" className="bg-bg py-24 sm:py-32">
+      <div className="container-page grid grid-cols-1 gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <SectionHeading
+            title={
+              <>
+                Цены, которые <em>не меняются</em> после подписания
+              </>
+            }
+            description="Ниже ориентир по частым процедурам. Точную смету врач составит после диагностики и зафиксирует в договоре."
+          />
+          <p className="mt-8 border-l-2 border-accent pl-4 text-[0.9rem] leading-relaxed text-ink-soft">
+            Первичная консультация с планом лечения бесплатна, если вы записываетесь на лечение.
+          </p>
+        </div>
 
-        <Reveal delay={0.1} className="mt-10">
-          <div
-            role="tablist"
-            aria-label="Категории цен"
-            className="flex flex-wrap gap-2 rounded-full border border-border dark:border-border-dark bg-surface dark:bg-surface-dark p-1.5 w-fit"
-          >
+        <div>
+          <div role="tablist" aria-label="Категории цен" className="flex flex-wrap gap-x-7 gap-y-2 border-b border-line">
             {pricing.map((cat, i) => (
               <button
                 key={cat.category}
@@ -34,42 +37,49 @@ export function Pricing({ onBookClick }) {
                 aria-selected={active === i}
                 onClick={() => setActive(i)}
                 className={clsx(
-                  'rounded-full px-4 py-2 text-sm font-semibold transition-colors',
+                  'relative -mb-px border-b-2 pb-3 text-[0.95rem] transition-colors',
                   active === i
-                    ? 'bg-primary-500 text-white'
-                    : 'text-ink-soft dark:text-ink-soft-dark hover:text-ink dark:hover:text-ink-dark',
+                    ? 'border-accent font-semibold text-ink'
+                    : 'border-transparent text-ink-soft hover:text-ink',
                 )}
               >
                 {cat.category}
               </button>
             ))}
           </div>
-        </Reveal>
 
-        <div className="mt-6 max-w-2xl overflow-hidden rounded-2xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark shadow-soft">
           <AnimatePresence mode="wait">
-            <motion.div
+            <motion.ul
               key={category.category}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25 }}
-              className="divide-y divide-border dark:divide-border-dark"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-2"
             >
               {category.items.map((item) => (
-                <div key={item.name} className="flex items-center justify-between gap-4 px-6 py-4">
-                  <p className="text-sm font-medium text-ink dark:text-ink-dark sm:text-base">{item.name}</p>
-                  <p className="whitespace-nowrap font-mono text-sm font-semibold text-primary-700 dark:text-primary-300 sm:text-base">
-                    от {formatPrice(item.price)}
+                <li
+                  key={item.name}
+                  className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line py-5"
+                >
+                  <div className="min-w-0">
+                    <p className="text-[1rem] text-ink">{item.name}</p>
+                    {item.note ? (
+                      <p className="mt-0.5 text-[0.8rem] text-ink-faint">{item.note}</p>
+                    ) : null}
+                  </div>
+                  <p className="whitespace-nowrap font-mono text-[0.95rem] font-medium text-ink">
+                    {item.price === 0 ? '0 ₽' : `от ${formatPrice(item.price)}`}
                   </p>
-                </div>
+                </li>
               ))}
-            </motion.div>
+            </motion.ul>
           </AnimatePresence>
-          <div className="flex items-center justify-between gap-4 bg-primary-50 dark:bg-primary-800/30 px-6 py-4">
-            <p className="text-sm text-ink-soft dark:text-ink-soft-dark">Точная цена — после диагностики</p>
+
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+            <p className="text-[0.88rem] text-ink-soft">Полный прайс отправим в мессенджер по запросу.</p>
             <Button variant="primary" size="md" onClick={onBookClick}>
-              Записаться на приём
+              Записаться на диагностику
             </Button>
           </div>
         </div>

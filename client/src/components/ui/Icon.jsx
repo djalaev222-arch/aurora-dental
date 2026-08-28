@@ -24,6 +24,9 @@ import {
   UserCircle,
   CheckCircle,
   ArrowRight,
+  ArrowUpRight,
+  Plus,
+  Minus,
   List,
   X,
   CaretDown,
@@ -58,6 +61,9 @@ const REGISTRY = {
   UserCircle,
   CheckCircle,
   ArrowRight,
+  ArrowUpRight,
+  Plus,
+  Minus,
   List,
   X,
   CaretDown,
@@ -67,23 +73,21 @@ const REGISTRY = {
   YoutubeLogo,
 }
 
-// Wrapped once at module scope so every <Icon> reuses the same motion-enhanced
-// component instead of re-wrapping (and remounting) on every render.
 const MOTION_REGISTRY = Object.fromEntries(
   Object.entries(REGISTRY).map(([key, Component]) => [key, motion.create(Component)]),
 )
 
-const HOVER = { scale: 1.16, rotate: 6, transition: { type: 'spring', stiffness: 420, damping: 14 } }
-const TAP = { scale: 0.86, rotate: -3, transition: { type: 'spring', stiffness: 500, damping: 22 } }
-const POP_HIDDEN = { scale: 0.4, opacity: 0, rotate: -14 }
-const POP_SHOWN = { scale: 1, opacity: 1, rotate: 0, transition: { type: 'spring', stiffness: 260, damping: 16 } }
+// Restrained motion to match the editorial tone: a small settle, no spin.
+const HOVER = { scale: 1.08, transition: { type: 'spring', stiffness: 320, damping: 18 } }
+const TAP = { scale: 0.92, transition: { type: 'spring', stiffness: 460, damping: 24 } }
+const POP_HIDDEN = { scale: 0.72, opacity: 0 }
+const POP_SHOWN = { scale: 1, opacity: 1, transition: { type: 'spring', stiffness: 220, damping: 20 } }
 
 /**
- * Animated SVG icon. Hover/tap always spring the glyph a little (motivated
- * feedback on interactive rows/buttons). Pass `pop` to also spring the icon
- * in on scroll, for feature-grid icons that are the visual focal point.
+ * Animated SVG icon. Hover/tap give a subtle settle on interactive elements.
+ * Pass `pop` to spring the icon in on scroll for feature-grid focal points.
  */
-export function Icon({ name, weight = 'duotone', className, pop = false, ...rest }) {
+export function Icon({ name, weight = 'regular', className, pop = false, ...rest }) {
   const reduce = useReducedMotion()
   const StaticComponent = REGISTRY[name] ?? CheckCircle
 

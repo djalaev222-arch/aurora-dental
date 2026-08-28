@@ -1,59 +1,63 @@
 import { motion, useReducedMotion } from 'motion/react'
 import clsx from 'clsx'
 
+/**
+ * Editorial section header. Eyebrow is optional and should be used sparingly
+ * (at most once every few sections). Title renders in the display serif.
+ */
 export function SectionHeading({
   eyebrow,
   title,
   description,
   align = 'left',
-  light = false,
+  tone = 'default',
   className,
 }) {
   const reduce = useReducedMotion()
+  const onDeep = tone === 'deep'
 
   return (
     <div
       className={clsx(
-        'max-w-2xl',
+        'max-w-[46rem]',
         align === 'center' && 'mx-auto text-center',
         className,
       )}
     >
       {eyebrow ? (
         <motion.p
-          initial={reduce ? false : { opacity: 0, y: 12 }}
+          initial={reduce ? false : { opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.5 }}
-          className={clsx(
-            'mb-3 text-xs font-semibold uppercase tracking-[0.14em]',
-            light ? 'text-primary-200' : 'text-primary-600 dark:text-primary-300',
-          )}
+          className={clsx('eyebrow mb-5', onDeep && 'text-deep-ink-soft')}
         >
           {eyebrow}
         </motion.p>
       ) : null}
+
       <motion.h2
         initial={reduce ? false : { opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className={clsx(
-          'text-balance text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1]',
-          light ? 'text-white' : 'text-ink dark:text-ink-dark',
+          'text-balance text-[1.9rem] leading-[1.08] sm:text-[2.4rem] lg:text-[2.9rem]',
+          onDeep ? 'text-deep-ink' : 'text-ink',
         )}
       >
         {title}
       </motion.h2>
+
       {description ? (
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, delay: 0.08 }}
+          transition={{ duration: 0.7, delay: 0.08 }}
           className={clsx(
-            'mt-4 text-base leading-relaxed sm:text-lg',
-            light ? 'text-white/75' : 'text-ink-soft dark:text-ink-soft-dark',
+            'mt-5 max-w-[40rem] text-pretty text-[1.02rem] leading-relaxed',
+            onDeep ? 'text-deep-ink-soft' : 'text-ink-soft',
           )}
         >
           {description}

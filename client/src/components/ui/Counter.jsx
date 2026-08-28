@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useInView, useReducedMotion } from 'motion/react'
 import { animate } from 'motion'
+import clsx from 'clsx'
 
-export function Counter({ value, suffix = '', duration = 1.6 }) {
+export function Counter({ value, suffix = '', prefix = '', duration = 1.8, className }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.6 })
   const reduce = useReducedMotion()
@@ -23,7 +24,8 @@ export function Counter({ value, suffix = '', duration = 1.6 }) {
   }, [isInView, value, duration, reduce])
 
   return (
-    <span ref={ref} className="font-mono tabular-nums">
+    <span ref={ref} className={clsx('tabular-nums', className)}>
+      {prefix}
       {display.toLocaleString('ru-RU')}
       {suffix}
     </span>

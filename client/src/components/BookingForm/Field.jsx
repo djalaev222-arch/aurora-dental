@@ -1,19 +1,17 @@
 export function Field({ label, htmlFor, error, hint, children }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={htmlFor} className="text-sm font-semibold text-ink dark:text-ink-dark">
+      <label htmlFor={htmlFor} className="text-[0.82rem] font-semibold text-ink">
         {label}
       </label>
       {children}
-      {hint && !error ? (
-        <p className="text-xs text-ink-soft dark:text-ink-soft-dark">{hint}</p>
-      ) : null}
-      {error ? <p className="text-xs font-medium text-accent-600 dark:text-accent-400">{error}</p> : null}
+      {hint && !error ? <p className="text-[0.78rem] text-ink-soft">{hint}</p> : null}
+      {error ? <p className="text-[0.78rem] font-medium text-accent-strong">{error}</p> : null}
     </div>
   )
 }
 
 export const inputClasses =
-  'w-full rounded-xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 py-3 text-sm text-ink dark:text-ink-dark placeholder:text-ink-soft/60 dark:placeholder:text-ink-soft-dark/60 outline-none transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 disabled:cursor-not-allowed disabled:opacity-60'
+  'w-full rounded-[2px] border border-line-strong bg-surface px-3.5 py-2.5 text-[0.92rem] text-ink placeholder:text-ink-soft outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 disabled:cursor-not-allowed disabled:opacity-60'
 
-export const inputErrorClasses = 'border-accent-500 focus:border-accent-500 focus:ring-accent-500/20'
+export const inputErrorClasses = 'border-accent focus:border-accent focus:ring-accent/25'

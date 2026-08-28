@@ -14,6 +14,7 @@ import { BookingForm } from './components/BookingForm/BookingForm.jsx'
 import { ContactMap } from './components/ContactMap/ContactMap.jsx'
 import { Footer } from './components/Footer/Footer.jsx'
 import { FloatingCTA } from './components/FloatingCTA/FloatingCTA.jsx'
+import { Grain } from './components/ui/Grain.jsx'
 
 function App() {
   const [selectedServiceId, setSelectedServiceId] = useState('')
@@ -32,7 +33,8 @@ function App() {
   )
 
   return (
-    <div className="pb-[68px] lg:pb-0">
+    <div className="relative pb-[72px] lg:pb-0">
+      <Grain />
       <Header onBookClick={scrollToBooking} />
       <main>
         <Hero onBookClick={scrollToBooking} />
@@ -40,9 +42,9 @@ function App() {
         <WhyUs />
         <Services onSelectService={handleSelectService} />
         <Doctors />
+        <BeforeAfter />
         <Technology />
         <Pricing onBookClick={scrollToBooking} />
-        <BeforeAfter />
         <Testimonials />
         <FAQ />
         <BookingForm selectedServiceId={selectedServiceId} formRef={bookingRef} />

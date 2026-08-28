@@ -1,39 +1,48 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { SectionHeading } from '../ui/SectionHeading.jsx'
-import { Reveal } from '../ui/Reveal.jsx'
-import { Icon } from '../ui/Icon.jsx'
-import { whyUs } from '../../data/content.js'
+import { principles } from '../../data/content.js'
 
 export function WhyUs() {
   const reduce = useReducedMotion()
 
   return (
-    <section className="bg-bg dark:bg-bg-dark py-20 sm:py-28">
-      <div className="container-page">
-        <SectionHeading
-          title="Почему пациенты выбирают Аврора Дентал"
-          description="Мы убрали из визита к стоматологу всё, что вызывает тревогу, и оставили только результат."
-        />
-
-        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {whyUs.map((card, i) => (
-            <Reveal key={card.title} delay={i * 0.08}>
-              <motion.div
-                whileHover={reduce ? undefined : { y: -6 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="h-full rounded-2xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark p-6 shadow-soft transition-shadow hover:shadow-lifted"
-              >
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 dark:bg-primary-800/40 text-primary-600 dark:text-primary-300">
-                  <Icon name={card.icon} weight="duotone" className="h-6 w-6" pop />
-                </span>
-                <h3 className="mt-4 text-lg font-bold text-ink dark:text-ink-dark">{card.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft dark:text-ink-soft-dark">
-                  {card.description}
-                </p>
-              </motion.div>
-            </Reveal>
-          ))}
+    <section className="bg-bg py-24 sm:py-32">
+      <div className="container-page grid grid-cols-1 gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <SectionHeading
+            title={
+              <>
+                Как мы <em>работаем</em> и почему пациенты остаются
+              </>
+            }
+            description="Четыре правила, которые не меняются от приёма к приёму и от врача к врачу."
+          />
         </div>
+
+        <ol className="border-t border-line">
+          {principles.map((item, i) => (
+            <motion.li
+              key={item.title}
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-b border-line py-8 sm:gap-x-10 sm:py-10"
+            >
+              <span className="font-display text-[1.4rem] leading-none text-ink-faint">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3 className="text-[1.35rem] leading-tight text-ink sm:text-[1.55rem]">
+                  {item.title}
+                </h3>
+                <p className="mt-3 max-w-[38rem] text-pretty text-[0.98rem] leading-relaxed text-ink-soft">
+                  {item.description}
+                </p>
+              </div>
+            </motion.li>
+          ))}
+        </ol>
       </div>
     </section>
   )

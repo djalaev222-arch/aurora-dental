@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AnimatePresence, motion } from 'motion/react'
+import clsx from 'clsx'
 import { SectionHeading } from '../ui/SectionHeading.jsx'
 import { Reveal } from '../ui/Reveal.jsx'
 import { Button } from '../ui/Button.jsx'
@@ -9,7 +10,6 @@ import { Field, inputClasses, inputErrorClasses } from './Field.jsx'
 import { useAvailability } from '../../hooks/useAvailability.js'
 import { apiUrl } from '../../lib/api.js'
 import { services, doctors, clinic } from '../../data/content.js'
-import clsx from 'clsx'
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10)
@@ -20,6 +20,25 @@ function maxDateISO() {
   d.setDate(d.getDate() + 45)
   return d.toISOString().slice(0, 10)
 }
+
+const CONTACT_METHODS = [
+  {
+    icon: 'Phone',
+    title: 'Позвонить',
+    detail: clinic.phone,
+    sub: `Ежедневно, ${clinic.hoursWeekday}`,
+    href: clinic.phoneHref,
+    external: false,
+  },
+  {
+    icon: 'WhatsappLogo',
+    title: 'WhatsApp',
+    detail: 'Написать в мессенджер',
+    sub: 'Отвечаем в течение часа в рабочее время',
+    href: clinic.whatsapp,
+    external: true,
+  },
+]
 
 export function BookingForm({ selectedServiceId, formRef }) {
   const {
@@ -95,52 +114,50 @@ export function BookingForm({ selectedServiceId, formRef }) {
       })
     } catch {
       setSubmitError(
-        `Не удалось отправить форму онлайн. Позвоните нам по ${clinic.phone} или напишите в WhatsApp — запишем вручную.`,
+        `Форма не отправилась онлайн. Позвоните по ${clinic.phone} или напишите в WhatsApp, мы запишем вручную.`,
       )
       setSubmitStatus('error')
     }
   }
 
   return (
-    <section id="booking" ref={formRef} className="bg-surface-muted dark:bg-surface-muted-dark py-20 sm:py-28">
-      <div className="container-page grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+    <section id="booking" ref={formRef} className="bg-bg-alt py-24 sm:py-32">
+      <div className="container-page grid grid-cols-1 gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
         <div>
           <SectionHeading
-            title="Запишитесь на приём онлайн"
-            description="Заполните форму — администратор свяжется с вами в течение 15 минут, чтобы подтвердить время."
+            title={
+              <>
+                Оставьте заявку, <em>остальное</em> берём на себя
+              </>
+            }
+            description="Администратор перезвонит в течение 15 минут в рабочее время, подтвердит врача и время и ответит на вопросы до визита."
           />
-          <div className="mt-8 flex flex-col gap-4">
-            <a
-              href={clinic.phoneHref}
-              className="flex items-center gap-3 rounded-2xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark p-4"
-            >
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-50 dark:bg-primary-800/40 text-primary-600 dark:text-primary-300">
-                <Icon name="Phone" weight="fill" className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-ink dark:text-ink-dark">{clinic.phone}</p>
-                <p className="text-xs text-ink-soft dark:text-ink-soft-dark">Ежедневно, {clinic.hoursWeekday}</p>
-              </div>
-            </a>
-            <a
-              href={clinic.whatsapp}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-3 rounded-2xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark p-4"
-            >
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-50 dark:bg-primary-800/40 text-primary-600 dark:text-primary-300">
-                <Icon name="WhatsappLogo" weight="fill" className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-ink dark:text-ink-dark">WhatsApp</p>
-                <p className="text-xs text-ink-soft dark:text-ink-soft-dark">Ответим в мессенджере</p>
-              </div>
-            </a>
+
+          <div className="mt-10 border-t border-line-strong">
+            {CONTACT_METHODS.map((method) => (
+              <a
+                key={method.title}
+                href={method.href}
+                {...(method.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                className="group flex items-center gap-4 border-b border-line py-5"
+              >
+                <Icon name={method.icon} weight="regular" className="h-5 w-5 flex-none text-accent" />
+                <div className="flex-1">
+                  <p className="text-[0.95rem] font-semibold text-ink">{method.detail}</p>
+                  <p className="text-[0.8rem] text-ink-soft">{method.sub}</p>
+                </div>
+                <Icon
+                  name="ArrowUpRight"
+                  weight="bold"
+                  className="h-4 w-4 text-ink-faint transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
+            ))}
           </div>
         </div>
 
         <Reveal delay={0.1}>
-          <div className="rounded-3xl border border-border dark:border-border-dark bg-surface dark:bg-surface-dark p-6 shadow-soft sm:p-8">
+          <div className="border border-line-strong bg-surface p-6 shadow-soft sm:p-9">
             <AnimatePresence mode="wait">
               {submitStatus === 'success' ? (
                 <motion.div
@@ -149,17 +166,15 @@ export function BookingForm({ selectedServiceId, formRef }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="flex flex-col items-center gap-4 py-10 text-center"
+                  className="flex flex-col items-center gap-4 py-12 text-center"
                 >
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-50 dark:bg-primary-800/40 text-primary-600 dark:text-primary-300">
-                    <Icon name="CheckCircle" weight="fill" className="h-9 w-9" />
-                  </span>
-                  <h3 className="text-xl font-bold text-ink dark:text-ink-dark">Заявка отправлена</h3>
-                  <p className="max-w-sm text-sm text-ink-soft dark:text-ink-soft-dark">
-                    Мы свяжемся с вами по указанному телефону, чтобы подтвердить дату и время приёма.
+                  <Icon name="CheckCircle" weight="regular" className="h-12 w-12 text-accent" />
+                  <h3 className="text-[1.5rem] text-ink">Заявка принята</h3>
+                  <p className="max-w-sm text-[0.92rem] leading-relaxed text-ink-soft">
+                    Мы позвоним по указанному номеру, чтобы подтвердить дату и время приёма.
                   </p>
                   <Button type="button" variant="secondary" onClick={() => setSubmitStatus('idle')}>
-                    Записать ещё одного пациента
+                    Записать ещё одного человека
                   </Button>
                 </motion.div>
               ) : (
@@ -229,7 +244,7 @@ export function BookingForm({ selectedServiceId, formRef }) {
                         <option value="">Любой свободный врач</option>
                         {doctors.map((d) => (
                           <option key={d.id} value={d.id}>
-                            {d.name} — {d.role}
+                            {d.name}, {d.role}
                           </option>
                         ))}
                       </select>
@@ -255,9 +270,9 @@ export function BookingForm({ selectedServiceId, formRef }) {
                         !doctorId || !date
                           ? 'Сначала выберите врача и дату'
                           : availabilityStatus === 'loading'
-                            ? 'Загружаем свободное время…'
+                            ? 'Загружаем свободное время'
                             : availabilityStatus === 'error'
-                              ? 'Не удалось загрузить время — позвоните нам напрямую'
+                              ? 'Не удалось загрузить время, позвоните нам напрямую'
                               : undefined
                       }
                     >
@@ -268,7 +283,7 @@ export function BookingForm({ selectedServiceId, formRef }) {
                         {...register('time', { required: 'Выберите время' })}
                       >
                         <option value="">
-                          {availabilityStatus === 'loading' ? 'Загрузка…' : 'Выберите время'}
+                          {availabilityStatus === 'loading' ? 'Загрузка' : 'Выберите время'}
                         </option>
                         {slots.map((slot) => (
                           <option key={slot} value={slot}>
@@ -289,29 +304,29 @@ export function BookingForm({ selectedServiceId, formRef }) {
                     />
                   </Field>
 
-                  <label className="flex items-start gap-3 text-xs text-ink-soft dark:text-ink-soft-dark">
+                  <label className="flex items-start gap-3 text-[0.78rem] leading-relaxed text-ink-soft">
                     <input
                       type="checkbox"
-                      className="mt-0.5 h-4 w-4 flex-none rounded border-border dark:border-border-dark text-primary-500 focus-visible:outline-primary-500"
+                      className="mt-0.5 h-4 w-4 flex-none rounded-[2px] border-line-strong text-accent focus-visible:outline-accent"
                       {...register('consent', { required: true })}
                     />
-                    Я согласен(на) на обработку персональных данных в соответствии с
-                    политикой конфиденциальности клиники.
+                    Я согласен на обработку персональных данных в соответствии с политикой
+                    конфиденциальности клиники.
                   </label>
                   {errors.consent ? (
-                    <p className="-mt-3 text-xs font-medium text-accent-600 dark:text-accent-400">
+                    <p className="-mt-3 text-[0.78rem] font-medium text-accent-strong">
                       Нужно согласие на обработку данных
                     </p>
                   ) : null}
 
                   {submitStatus === 'error' ? (
-                    <p className="rounded-xl bg-accent-100 dark:bg-accent-700/20 px-4 py-3 text-sm text-accent-700 dark:text-accent-300">
+                    <p className="border border-accent/40 bg-accent-tint/50 px-4 py-3 text-[0.85rem] text-accent-ink">
                       {submitError}
                     </p>
                   ) : null}
 
                   <Button type="submit" variant="primary" size="lg" disabled={isSubmitting} className="mt-1">
-                    {isSubmitting ? 'Отправляем…' : 'Отправить заявку'}
+                    {isSubmitting ? 'Отправляем' : 'Отправить заявку'}
                   </Button>
                 </motion.form>
               )}

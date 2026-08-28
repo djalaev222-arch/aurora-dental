@@ -1,53 +1,56 @@
 @import "tailwindcss";
 
+/*
+  Aurora Dental - "quiet luxury" editorial design system.
+  Light theme, locked. One accent: terracotta. One deep color-block: petrol.
+  Near-sharp corners everywhere (radius 2px); full-round only for genuinely
+  circular elements (avatars, icon chips).
+*/
+
 @theme {
-  /* surfaces */
-  --color-bg: #fdfaf4;
-  --color-bg-dark: #0a1815;
-  --color-surface: #ffffff;
-  --color-surface-dark: #12241f;
-  --color-surface-muted: #e8f5ef;
-  --color-surface-muted-dark: #14302a;
+  /* surfaces - warm oyster paper, not the AI-default cream */
+  --color-bg: #f1efe8;
+  --color-bg-alt: #e7e3d8;
+  --color-surface: #fbfaf6;
 
-  /* text */
-  --color-ink: #142420;
-  --color-ink-dark: #eef7f2;
-  --color-ink-soft: #57685f;
-  --color-ink-soft-dark: #a9bcb4;
+  /* ink - deep petrol-slate, never pure black */
+  --color-ink: #1e2a29;
+  --color-ink-soft: #5d635d;
+  --color-ink-faint: #8a8d84;
 
-  /* lines */
-  --color-border: #e0e9e2;
-  --color-border-dark: #204039;
+  /* hairlines */
+  --color-line: #dcd6c8;
+  --color-line-strong: #c6bfad;
 
-  /* brand: emerald-teal (primary) */
-  --color-primary-50: #ecfaf5;
-  --color-primary-100: #cdf0e2;
-  --color-primary-300: #67cbb0;
-  --color-primary-400: #2ba98c;
-  --color-primary-500: #0c8871;
-  --color-primary-600: #096b5a;
-  --color-primary-700: #085346;
-  --color-primary-800: #073d34;
+  /* single accent - terracotta */
+  --color-accent: #bd583a;
+  --color-accent-strong: #9d4127;
+  --color-accent-tint: #eedccf;
+  --color-accent-ink: #582415;
 
-  /* brand: living coral (single warm accent) */
-  --color-accent-100: #ffe3d6;
-  --color-accent-300: #ffb196;
-  --color-accent-400: #fc7d54;
-  --color-accent-500: #ef5027;
-  --color-accent-600: #cf3a17;
-  --color-accent-700: #a52c10;
+  /* one deliberate deep color-block section */
+  --color-deep: #202f2c;
+  --color-deep-soft: #2b3d39;
+  --color-deep-line: #3d514c;
+  --color-deep-ink: #e8e3d6;
+  --color-deep-ink-soft: #a9b3ab;
 
-  --font-display: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display Variable", "Playfair Display", ui-serif, Georgia, "Times New Roman", serif;
+  --font-body: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
-  --shadow-soft: 0 1px 2px rgba(20, 37, 30, 0.04), 0 12px 32px -12px rgba(20, 37, 30, 0.14);
-  --shadow-lifted: 0 2px 4px rgba(20, 37, 30, 0.05), 0 24px 48px -16px rgba(20, 37, 30, 0.22);
+  --radius-card: 2px;
+
+  --shadow-soft: 0 1px 2px rgba(30, 42, 41, 0.04), 0 20px 45px -24px rgba(30, 42, 41, 0.18);
+  --shadow-lifted: 0 2px 6px rgba(30, 42, 41, 0.06), 0 44px 80px -30px rgba(30, 42, 41, 0.3);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
   * {
-    @apply border-border dark:border-border-dark;
+    border-color: var(--color-line);
+    min-width: 0;
   }
 
   html {
@@ -56,30 +59,46 @@
   }
 
   body {
-    @apply bg-bg text-ink dark:bg-bg-dark dark:text-ink-dark font-body antialiased;
-    font-feature-settings: "ss01" 1, "cv05" 1;
+    @apply bg-bg text-ink font-body antialiased;
+    font-feature-settings: "ss01" 1;
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background: var(--color-accent-300);
-    color: var(--color-ink);
+    background: var(--color-accent-tint);
+    color: var(--color-accent-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-primary-500);
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
 
-  h1, h2, h3, h4 {
-    @apply font-display font-extrabold tracking-tight;
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    line-height: 1.06;
+  }
+
+  h1 em,
+  h2 em,
+  h3 em {
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.12;
   }
 
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
@@ -90,10 +109,43 @@
 
 @layer utilities {
   .container-page {
-    @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-10;
+    @apply mx-auto w-full max-w-[1280px] px-6 sm:px-10 lg:px-14;
+  }
+
+  .container-wide {
+    @apply mx-auto w-full max-w-[1480px] px-6 sm:px-10 lg:px-14;
   }
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* editorial eyebrow - used sparingly (max 1 per 3 sections) */
+  .eyebrow {
+    @apply font-mono text-[0.68rem] font-medium uppercase tracking-[0.22em] text-ink-faint;
+  }
+
+  .hairline {
+    @apply block h-px w-full bg-line;
+  }
+
+  /* warm, consistent art direction over every photograph */
+  .photo-warm {
+    filter: saturate(0.92) contrast(1.02) brightness(1.01);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 0.4s var(--ease-out-expo);
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
   }
 }
