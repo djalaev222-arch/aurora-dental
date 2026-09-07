@@ -34,6 +34,13 @@ import {
   ArrowsLeftRight,
   InstagramLogo,
   YoutubeLogo,
+  SealCheck,
+  SprayBottle,
+  Package,
+  Recycle,
+  Broom,
+  Gift,
+  Tooth,
 } from '@phosphor-icons/react'
 
 const REGISTRY = {
@@ -71,6 +78,13 @@ const REGISTRY = {
   ArrowsLeftRight,
   InstagramLogo,
   YoutubeLogo,
+  SealCheck,
+  SprayBottle,
+  Package,
+  Recycle,
+  Broom,
+  Gift,
+  Tooth,
 }
 
 const MOTION_REGISTRY = Object.fromEntries(

@@ -1,42 +1,51 @@
 @import "tailwindcss";
 
 /*
-  Aurora Dental - "quiet luxury" editorial design system.
-  Light theme, locked. One accent: terracotta. One deep color-block: petrol.
+  Aurora Dental - warm-minimal design system.
+  Single light palette across the whole page (no dark break section).
+  Primary accent: deep mint-green. Secondary accent: muted terracotta,
+  reserved for badges and secondary elements. Dark charcoal plates
+  (card-dark / deep) live only inside the footer and the equipment cards.
   Near-sharp corners everywhere (radius 2px); full-round only for genuinely
   circular elements (avatars, icon chips).
 */
 
 @theme {
-  /* surfaces - warm oyster paper, not the AI-default cream */
-  --color-bg: #f1efe8;
-  --color-bg-alt: #e7e3d8;
-  --color-surface: #fbfaf6;
+  /* surfaces - warm white paper */
+  --color-bg: #faf8f4;
+  --color-bg-alt: #f1efe8;
+  --color-surface: #fefcf8;
 
-  /* ink - deep petrol-slate, never pure black */
-  --color-ink: #1e2a29;
-  --color-ink-soft: #5d635d;
-  --color-ink-faint: #8a8d84;
+  /* ink - warm near-black, never pure black */
+  --color-ink: #22221e;
+  --color-ink-soft: #6b6a63;
+  --color-ink-faint: #96958b;
 
   /* hairlines */
-  --color-line: #dcd6c8;
-  --color-line-strong: #c6bfad;
+  --color-line: #e4e1d8;
+  --color-line-strong: #d3cfc2;
 
-  /* single accent - terracotta */
-  --color-accent: #bd583a;
-  --color-accent-strong: #9d4127;
-  --color-accent-tint: #eedccf;
-  --color-accent-ink: #582415;
+  /* primary accent - deep mint-green (CTA, links, icons) */
+  --color-accent: #2f6f5e;
+  --color-accent-strong: #26594b;
+  --color-accent-tint: #dfeae5;
+  --color-accent-ink: #1f4438;
 
-  /* one deliberate deep color-block section */
-  --color-deep: #202f2c;
-  --color-deep-soft: #2b3d39;
-  --color-deep-line: #3d514c;
-  --color-deep-ink: #e8e3d6;
-  --color-deep-ink-soft: #a9b3ab;
+  /* secondary accent - muted terracotta (badges, secondary elements) */
+  --color-secondary: #c4703f;
+  --color-secondary-strong: #a85c30;
+  --color-secondary-ink: #5c2f16;
 
-  --font-display: "Playfair Display Variable", "Playfair Display", ui-serif, Georgia, "Times New Roman", serif;
-  --font-body: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* dark charcoal plates - footer + equipment cards, tuned to the palette */
+  --color-card-dark: #2a2e2b;
+  --color-deep: #2a2e2b;
+  --color-deep-soft: #343a36;
+  --color-deep-line: #42483f;
+  --color-deep-ink: #ecebe3;
+  --color-deep-ink-soft: #a8a89f;
+
+  --font-display: "Manrope Variable", "Manrope", "Unbounded", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-body: "Manrope Variable", "Manrope", "Inter", "Golos Text", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
   --radius-card: 2px;
@@ -56,6 +65,12 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* every in-page anchor target clears the sticky header (~76px) so a
+     section opens at its own heading, not cropped under the bar */
+  :where(section[id], [id][data-anchor]) {
+    scroll-margin-top: 5.25rem;
   }
 
   body {
@@ -79,16 +94,18 @@
   h2,
   h3 {
     @apply font-display;
-    font-weight: 500;
-    letter-spacing: -0.012em;
-    line-height: 1.06;
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    line-height: 1.05;
   }
 
+  /* accent words in headlines stay set apart by meaning, but in the same
+     geometric grotesk - an oblique of Manrope, not a separate serif italic */
   h1 em,
   h2 em,
   h3 em {
     font-style: italic;
-    font-weight: 500;
+    font-weight: 700;
     line-height: 1.12;
   }
 

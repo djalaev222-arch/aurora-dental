@@ -15,27 +15,40 @@ const fade = {
 }
 
 const PERKS = [
-  { icon: 'ShieldCheck', label: 'Лечение без боли', position: 'left-0 top-6 sm:-left-8', always: true },
-  { icon: 'Cube', label: '3D-диагностика', position: 'right-0 top-20 sm:-right-4', always: false },
-  { icon: 'Certificate', label: 'Гарантия в договоре', position: 'left-0 bottom-24 sm:-left-8', always: false },
-  { icon: 'CreditCard', label: 'Рассрочка 0%', position: 'right-0 bottom-8 sm:-right-4', always: true },
+  { icon: 'ShieldCheck', label: 'Лечение без боли', position: 'left-0 top-6 sm:-left-8', always: true, tone: 'accent' },
+  { icon: 'Cube', label: '3D-диагностика', position: 'right-0 top-20 sm:-right-4', always: false, tone: 'accent' },
+  { icon: 'Certificate', label: 'Гарантия в договоре', position: 'left-0 bottom-24 sm:-left-8', always: false, tone: 'secondary' },
+  { icon: 'CreditCard', label: 'Рассрочка 0%', position: 'right-0 bottom-8 sm:-right-4', always: true, tone: 'secondary' },
 ]
 
 const IMAGE_MASK =
   'radial-gradient(105% 100% at 50% 44%, #000 26%, rgba(0,0,0,0.62) 58%, transparent 88%)'
 
-function PerkChip({ icon, label, position, always, index, reduce }) {
+function PerkChip({ icon, label, position, always, index, reduce, tone }) {
+  const isSecondary = tone === 'secondary'
   return (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 12, scale: 0.94 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, delay: 0.9 + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-      className={`absolute z-10 ${position} ${always ? 'flex' : 'hidden sm:flex'} items-center gap-2 rounded-full border border-line bg-surface/90 py-2 pl-2.5 pr-4 shadow-soft backdrop-blur-md`}
+      className={`absolute z-10 ${position} ${always ? 'flex' : 'hidden sm:flex'} items-center gap-2 rounded-full border py-2 pl-2.5 pr-4 shadow-soft backdrop-blur-md ${
+        isSecondary ? 'border-secondary/30 bg-surface/90' : 'border-line bg-surface/90'
+      }`}
     >
-      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent-tint text-accent">
+      <span
+        className={`flex h-7 w-7 items-center justify-center rounded-full ${
+          isSecondary ? 'bg-secondary/[0.15] text-secondary' : 'bg-accent-tint text-accent'
+        }`}
+      >
         <Icon name={icon} weight="regular" className="h-4 w-4" />
       </span>
-      <span className="whitespace-nowrap text-[0.8rem] font-semibold text-ink">{label}</span>
+      <span
+        className={`whitespace-nowrap text-[0.8rem] font-semibold ${
+          isSecondary ? 'text-secondary-ink' : 'text-ink'
+        }`}
+      >
+        {label}
+      </span>
     </motion.div>
   )
 }

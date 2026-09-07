@@ -28,7 +28,7 @@ export function SectionHeading({
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.6 }}
+          viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5 }}
           className={clsx('eyebrow mb-5', onDeep && 'text-deep-ink-soft')}
         >
@@ -37,10 +37,10 @@ export function SectionHeading({
       ) : null}
 
       <motion.h2
-        initial={reduce ? false : { opacity: 0, y: 18 }}
+        initial={reduce ? false : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
         className={clsx(
           'text-balance text-[1.9rem] leading-[1.08] sm:text-[2.4rem] lg:text-[2.9rem]',
           onDeep ? 'text-deep-ink' : 'text-ink',
@@ -51,10 +51,10 @@ export function SectionHeading({
 
       {description ? (
         <motion.p
-          initial={reduce ? false : { opacity: 0, y: 14 }}
+          initial={reduce ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.7, delay: 0.08 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.55, delay: 0.06 }}
           className={clsx(
             'mt-5 max-w-[40rem] text-pretty text-[1.02rem] leading-relaxed',
             onDeep ? 'text-deep-ink-soft' : 'text-ink-soft',

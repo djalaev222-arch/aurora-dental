@@ -6,6 +6,8 @@ import { WhyUs } from './components/WhyUs/WhyUs.jsx'
 import { Services } from './components/Services/Services.jsx'
 import { Doctors } from './components/Doctors/Doctors.jsx'
 import { Technology } from './components/Technology/Technology.jsx'
+import { Sterility } from './components/Sterility/Sterility.jsx'
+import { FirstVisit } from './components/FirstVisit/FirstVisit.jsx'
 import { Pricing } from './components/Pricing/Pricing.jsx'
 import { BeforeAfter } from './components/BeforeAfter/BeforeAfter.jsx'
 import { Testimonials } from './components/Testimonials/Testimonials.jsx'
@@ -38,12 +40,14 @@ function App() {
       <Header onBookClick={scrollToBooking} />
       <main>
         <Hero onBookClick={scrollToBooking} />
+        <FirstVisit onBookClick={scrollToBooking} />
         <Stats />
         <WhyUs />
         <Services onSelectService={handleSelectService} />
         <Doctors />
         <BeforeAfter />
         <Technology />
+        <Sterility />
         <Pricing onBookClick={scrollToBooking} />
         <Testimonials />
         <FAQ />

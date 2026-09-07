@@ -2,6 +2,21 @@ function unsplash(id, w, h) {
   return `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&crop=faces,center&auto=format&q=80`
 }
 
+// tighter framing for macro shots (teeth, hands) where face detection would
+// zoom to the wrong place
+function unsplashCrop(id, w, h) {
+  return `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&crop=entropy,center&auto=format&q=80`
+}
+
+const SMILE_CLOSEUPS = {
+  veneersBefore: '1663182234283-28941e7612da',
+  veneersAfter: '1677026010083-78ec7f1b84ed',
+  whiteningBefore: '1664529842504-5743d286ec1b',
+  whiteningAfter: '1654373535457-383a0a4d00f9',
+  alignBefore: '1660732205495-f65510d8180e',
+  alignAfter: '1658847075261-84ecf3e4ca56',
+}
+
 const PHOTOS = {
   heroConsult: '1609207825181-52d3214556dd',
   clinicInterior: '1629909613654-28e377c37b09',
@@ -23,6 +38,7 @@ const PHOTOS = {
 export const heroPhoto = unsplash(PHOTOS.heroConsult, 1000, 1250)
 export const clinicInteriorPhoto = unsplash(PHOTOS.clinicInterior, 1100, 1300)
 export const smilePhoto = unsplash(PHOTOS.smileBright1, 1100, 900)
+export const sterilityPhoto = unsplashCrop('1643660527090-bea721ad71f8', 1000, 1250)
 
 export const heroAvatarPhotos = [
   unsplash(PHOTOS.smileBright3, 96, 96),
@@ -202,6 +218,53 @@ export const philosophy = {
   ],
 }
 
+export const sterility = {
+  eyebrow: 'Стерильность и безопасность',
+  title: 'Инфекционный контроль, который вы можете проверить',
+  description:
+    'Стерилизация у нас организована по классу B - это самый строгий стандарт для стоматологии. Ниже то, что происходит между приёмами, даже если вы этого не видите.',
+  points: [
+    {
+      icon: 'Recycle',
+      title: 'Автоклав после каждого пациента',
+      description: 'Все инструменты проходят полный цикл в автоклаве класса B сразу после приёма. Никакой инструмент не используется дважды без стерилизации.',
+    },
+    {
+      icon: 'Package',
+      title: 'Одноразовое - в запечатанной упаковке',
+      description: 'Слюноотсосы, стаканы, нагубники, перчатки и салфетки вскрываем при вас и утилизируем сразу после приёма.',
+    },
+    {
+      icon: 'SealCheck',
+      title: 'Контроль каждого цикла',
+      description: 'Каждую загрузку автоклава проверяем химическими и биологическими индикаторами. Журнал стерилизации храним и покажем по запросу.',
+    },
+    {
+      icon: 'SprayBottle',
+      title: 'Индивидуальный бокс на приём',
+      description: 'Инструменты для вашего визита хранятся в запечатанном крафт-пакете с датой стерилизации и вскрываются только в кабинете.',
+    },
+  ],
+}
+
+export const firstVisit = {
+  primary: {
+    icon: 'Gift',
+    label: 'Первый визит',
+    title: 'Первичная консультация и осмотр - бесплатно',
+    description:
+      'Диагностика, 3D-снимок при необходимости и план лечения с ценой по этапам ничего не стоят, если вы записываетесь на лечение.',
+    cta: 'Записаться на консультацию',
+  },
+  urgent: {
+    icon: 'Lightning',
+    label: 'Острая боль',
+    title: 'Приём в день обращения',
+    description:
+      'При острой боли стараемся принять вас в тот же день. Позвоните заранее - администратор подберёт ближайшее окно и предупредит врача.',
+  },
+}
+
 export const pricing = [
   {
     category: 'Терапия',
@@ -246,22 +309,22 @@ export const beforeAfter = [
     id: 'veneers',
     title: 'Виниры E-max на передний отдел',
     detail: '10 виниров, 3 визита, срок работы 4 недели',
-    before: unsplash(PHOTOS.patientNeutral2, 1000, 800),
-    after: unsplash(PHOTOS.smileBright2, 1000, 800),
+    before: unsplashCrop(SMILE_CLOSEUPS.veneersBefore, 1000, 800),
+    after: unsplashCrop(SMILE_CLOSEUPS.veneersAfter, 1000, 800),
   },
   {
     id: 'whitening',
     title: 'Кабинетное отбеливание Zoom',
     detail: 'один приём, осветление на 6 тонов',
-    before: unsplash(PHOTOS.patientNeutral1, 1000, 800),
-    after: unsplash(PHOTOS.smileBright3, 1000, 800),
+    before: unsplashCrop(SMILE_CLOSEUPS.whiteningBefore, 1000, 800),
+    after: unsplashCrop(SMILE_CLOSEUPS.whiteningAfter, 1000, 800),
   },
   {
     id: 'alignment',
     title: 'Выравнивание элайнерами',
     detail: '14 месяцев ношения, снято на контрольном визите',
-    before: unsplash(PHOTOS.aligner, 1000, 800),
-    after: unsplash(PHOTOS.smileBright1, 1000, 800),
+    before: unsplashCrop(SMILE_CLOSEUPS.alignBefore, 1000, 800),
+    after: unsplashCrop(SMILE_CLOSEUPS.alignAfter, 1000, 800),
   },
 ]
 
@@ -271,6 +334,7 @@ export const testimonials = [
     name: 'Анна Ковалёва',
     context: 'лечение кариеса, терапевт Соколова',
     rating: 5,
+    date: 'август 2026',
     photo: unsplash(PHOTOS.smileBright1, 128, 128),
     quote: 'Первый раз за много лет вышла от стоматолога спокойной. Врач проговаривала каждый шаг, и укол я правда не почувствовала.',
   },
@@ -279,6 +343,7 @@ export const testimonials = [
     name: 'Дмитрий Уваров',
     context: 'имплант, хирург Бекетов',
     rating: 5,
+    date: 'июль 2026',
     photo: unsplash(PHOTOS.patientMan, 128, 128),
     quote: 'Смету дали заранее, и в конце она совпала до рубля. Через полгода имплант ощущается как собственный зуб.',
   },
@@ -287,6 +352,7 @@ export const testimonials = [
     name: 'Ксения Мальцева',
     context: 'детский приём, доктор Огарков',
     rating: 5,
+    date: 'июль 2026',
     photo: unsplash(PHOTOS.patientWoman1, 128, 128),
     quote: 'Дочка боялась даже входить в кабинет. Через два визита сама просит поехать к доктору Огаркову.',
   },
@@ -295,6 +361,7 @@ export const testimonials = [
     name: 'Игорь Панфилов',
     context: 'виниры, терапевт Соколова',
     rating: 5,
+    date: 'май 2026',
     photo: unsplash(PHOTOS.patientNeutral2, 128, 128),
     quote: 'Показали макет улыбки на экране до начала работы. Результат совпал с картинкой один в один.',
   },
@@ -303,6 +370,7 @@ export const testimonials = [
     name: 'Наталья Ерохина',
     context: 'элайнеры, ортодонт Литвинова',
     rating: 5,
+    date: 'апрель 2026',
     photo: unsplash(PHOTOS.patientWoman2, 128, 128),
     quote: 'Ношу элайнеры десять месяцев. Врач отвечает в телеграме в тот же день, если что-то непонятно.',
   },

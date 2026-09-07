@@ -5,6 +5,39 @@ import { testimonials } from '../../data/content.js'
 
 const AUTOPLAY_MS = 7000
 
+function initials(name) {
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0].toUpperCase())
+    .join('')
+}
+
+function Avatar({ name, photo }) {
+  const [failed, setFailed] = useState(false)
+
+  if (!photo || failed) {
+    return (
+      <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-accent text-[0.85rem] font-semibold text-surface">
+        {initials(name)}
+      </span>
+    )
+  }
+
+  return (
+    <img
+      src={photo}
+      alt=""
+      width={48}
+      height={48}
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className="h-12 w-12 flex-none rounded-full object-cover ring-1 ring-line-strong"
+    />
+  )
+}
+
 export function Testimonials() {
   const [[index, direction], setState] = useState([0, 0])
   const reduce = useReducedMotion()
@@ -71,16 +104,14 @@ export function Testimonials() {
                 <span className="text-accent">”</span>
               </blockquote>
               <figcaption className="mt-8 flex items-center gap-4">
-                <img
-                  src={current.photo}
-                  alt=""
-                  width={52}
-                  height={52}
-                  loading="lazy"
-                  className="h-12 w-12 rounded-full object-cover"
-                />
+                <Avatar name={current.name} photo={current.photo} />
                 <div>
-                  <p className="text-[0.95rem] font-semibold text-ink">{current.name}</p>
+                  <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                    <span className="text-[0.95rem] font-semibold text-ink">{current.name}</span>
+                    {current.date ? (
+                      <span className="font-mono text-[0.72rem] text-ink-faint">{current.date}</span>
+                    ) : null}
+                  </p>
                   <p className="text-[0.83rem] text-ink-soft">{current.context}</p>
                 </div>
               </figcaption>

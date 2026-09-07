@@ -3,9 +3,9 @@ import clsx from 'clsx'
 
 const VARIANTS = {
   primary:
-    'bg-accent text-surface hover:bg-accent-strong shadow-[0_1px_2px_rgba(30,42,41,0.12)] hover:shadow-[0_10px_24px_-10px_rgba(157,65,39,0.55)]',
+    'bg-accent text-surface hover:bg-accent-strong shadow-[0_1px_2px_rgba(34,34,30,0.12)] hover:shadow-[0_10px_24px_-10px_rgba(47,111,94,0.5)]',
   secondary:
-    'border border-ink/25 text-ink hover:border-ink hover:bg-ink/[0.04]',
+    'border border-accent/40 text-accent hover:border-accent hover:bg-accent/[0.06]',
   ghost:
     'border border-deep-ink/30 text-deep-ink hover:bg-deep-ink/10',
 }
